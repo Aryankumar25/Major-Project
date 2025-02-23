@@ -1,2 +1,2 @@
 # Major-Project
-This repo is for mojor project
+This repo is for major project
