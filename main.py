@@ -6,17 +6,17 @@ def main():
     vehicle = Vehicle()
     key = Key()
 
-    print("\n🔹 Generating Challenge...")
-    challenge = vehicle.generate_challenge()
+    for i in range(6):  # Run multiple authentications to trigger key rotation
+        print(f"\n🔐 Authentication Attempt {i+1}...")
+        challenge = vehicle.generate_challenge()
+        signed_response = key.sign_challenge(challenge)
 
-    print("\n🔹 Key Signing Challenge...")
-    signed_response = key.sign_challenge(challenge)
+        if vehicle.authenticate_key(challenge, signed_response):
+            print("✅ Vehicle Unlocked!")
+        else:
+            print("❌ Access Denied!")
 
-    print("\n🔹 Authenticating Key...")
-    if vehicle.authenticate_key(challenge, signed_response):
-        print("✅ Vehicle Unlocked!")
-    else:
-        print("❌ Access Denied!")
+    print("\n🔄 Key Rotation should have happened after 5 successful authentications.")
 
 if __name__ == "__main__":
     log_event("Starting Secure Vehicle Authentication System...")
