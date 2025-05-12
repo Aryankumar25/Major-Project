@@ -11,7 +11,7 @@ class Vehicle:
     def generate_challenge(self):
         """Generate a random nonce (challenge)."""
         nonce = secrets.token_hex(NONCE_LENGTH)
-        log_event(f"Vehicle {self.vehicle_id} generated challenge: {nonce}")
+        log_event(f"Vehicle {self.vehicle_id} challenge: {nonce}")
         return nonce
 
     def authenticate_key(self, challenge, signed_response):

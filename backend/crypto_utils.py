@@ -19,10 +19,9 @@ class ECCManager:
         """Generate and save a new ECC key pair for a vehicle."""
         private_key_file, public_key_file = self.get_key_files(vehicle_id)
 
-        if os.path.exists(private_key_file) and os.path.exists(public_key_file):
-            return  # Keys already exist
+        
 
-        start_time = time.time()  # ✅ Start timing
+        start_time = time.time()
 
         private_key = ecdsa.SigningKey.generate(curve=ecdsa.NIST256p)
         public_key = private_key.get_verifying_key()
@@ -52,11 +51,11 @@ class ECCManager:
         """Sign a message using ECC private key and measure signing time."""
         private_key = self.load_private_key(vehicle_id)
 
-        start_time = time.time()  # ✅ Start timing
+        start_time = time.time()  #  Start timing
         signature = private_key.sign(message.encode())
-        signing_time = time.time() - start_time  # ✅ Calculate execution time
+        signing_time = time.time() - start_time  #  Calculate execution time
 
-        print(f"⏳ Signing Time: {signing_time:.6f} seconds")
+        print(f"Signing Time: {signing_time:.6f} seconds")
         return base64.b64encode(signature).decode()
 
     def verify_signature(self, message, signature, vehicle_id):
@@ -65,11 +64,11 @@ class ECCManager:
             public_key = self.load_public_key(vehicle_id)
             decoded_signature = base64.b64decode(signature)
 
-            start_time = time.time()  # ✅ Start timing
+            start_time = time.time()  # Start timing
             is_valid = public_key.verify(decoded_signature, message.encode())
-            verification_time = time.time() - start_time  # ✅ Calculate execution time
+            verification_time = time.time() - start_time  # Calculate execution time
 
-            print(f"⏳ Verification Time: {verification_time:.6f} seconds")
+            print(f"Verification Time: {verification_time:.6f} seconds")
             return is_valid
 
         except ecdsa.BadSignatureError:
